@@ -1,0 +1,20 @@
+.button {
+  height: 48px;
+  background: #5677ad;
+  border: 0;
+  cursor: pointer;
+  color: white;
+  padding: 0 30px;
+  border-radius: 30px;
+  &:disabled,
+  &:disabled:hover {
+    background-color: gray;
+    cursor: default;
+  }
+}
+.buttonGreen {
+  background-color: #20bd5f;
+}
+.buttonGray {
+  background-color: gray;
+}
