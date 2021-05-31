@@ -10,7 +10,7 @@ export const StepInfo: React.FC<StepInfoProps> = ({
   icons,
 }) => {
   return (
-    <div>
+    <div className="flex flex-wrap flex-column align-items-center mr-t-100">
       <div>
         <img src={icons} />
       </div>

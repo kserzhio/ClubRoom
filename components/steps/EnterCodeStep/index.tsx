@@ -10,7 +10,7 @@ export const EnterCodeStep = () => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const nextDisabled = codes.some((v) => !v);
   const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const index = Number(event.target.getAttribute('id')) - 1;
+    const index = Number(event.target.getAttribute('id'));
     const value = event.target.value;
     setCodes((prev) => {
       const newArr = [...prev];
@@ -34,47 +34,35 @@ export const EnterCodeStep = () => {
   };
   return (
     <div>
-      <StepInfo
-        icons='/static/number.svg'
-        title='Enter your active code'
-      ></StepInfo>
+      <div className='mr-10'>
+        <StepInfo
+          icons='/static/number.svg'
+          title='Enter your active code'
+        ></StepInfo>
+      </div>
       {!isLoading ? (
         <WhiteBlock>
-          <div>
-            <input
-              placeholder='X'
-              type='tel'
-              maxLength={1}
-              id='1'
-              onChange={handleChangeInput}
-              value={codes[0] || ''}
-            />
-            <input
-              placeholder='X'
-              type='tel'
-              maxLength={1}
-              id='2'
-              onChange={handleChangeInput}
-              value={codes[1] || ''}
-            />
-            <input
-              placeholder='X'
-              type='tel'
-              maxLength={1}
-              id='3'
-              onChange={handleChangeInput}
-              value={codes[2] || ''}
-            />
-            <input
-              placeholder='X'
-              type='tel'
-              maxLength={1}
-              id='4'
-              onChange={handleChangeInput}
-              value={codes[3] || ''}
-            />
+          <div className='flex flex-wrap'>
+            {codes.map((code, index) => {
+              return (
+                <input
+                  key={index}
+                  placeholder='X'
+                  type='tel'
+                  className='form-control__input md mr-10'
+                  maxLength={1}
+                  id={index.toString()}
+                  onChange={handleChangeInput}
+                  value={code}
+                />
+              );
+            })}
           </div>
-          <Button onClick={onSubmit} disabled={nextDisabled}>
+          <Button
+            className='mr-t-20 mr-l-10'
+            onClick={onSubmit}
+            disabled={nextDisabled}
+          >
             Next
           </Button>
         </WhiteBlock>

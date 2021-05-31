@@ -1,12 +1,19 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import clsx from 'clsx';
 import React from 'react';
 import styles from './Button.module.scss';
+
+const colors = {
+  green: styles.buttonGreen,
+  gray: styles.buttonGray,
+};
 interface ButtonProps {
   disabled?: boolean;
-  color?: 'green' | 'gray';
+  color?: keyof typeof colors;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   className?: string;
   children: string;
+  icons?: any;
 }
 export const Button: React.FC<ButtonProps> = ({
   children,
@@ -14,11 +21,8 @@ export const Button: React.FC<ButtonProps> = ({
   color,
   onClick,
   className,
+  icons,
 }) => {
-  const colors = {
-    green: styles.buttonGreen,
-    gray: styles.buttonGray,
-  };
   return (
     <button
       onClick={onClick}
@@ -26,7 +30,8 @@ export const Button: React.FC<ButtonProps> = ({
       className={clsx(className, styles.button, colors[color])}
       disabled={disabled}
     >
-      {children}
+      <span className="pd-r-10">{children}</span>
+      <FontAwesomeIcon icon={icons ? icons : ''}></FontAwesomeIcon>
     </button>
   );
 };

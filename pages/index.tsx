@@ -5,6 +5,7 @@ import { TwitterStep } from '../components/steps/TwitterStep';
 import { ChooseAvatarStep } from '../components/steps/ChooseAvatarStep';
 import { EnterPhoneStep } from '../components/steps/EnterPhoneStep';
 import { EnterCodeStep } from '../components/steps/EnterCodeStep';
+import { Header } from '../components/Header';
 type MainContextProps = {
   onNextStep: () => void;
   step: number;
@@ -28,6 +29,7 @@ export default function Home() {
   };
   return (
     <MainContext.Provider value={{ step, onNextStep }}>
+      <Header></Header>
       <Step />
     </MainContext.Provider>
   );

@@ -2,7 +2,9 @@ import React from 'react';
 import { WhiteBlock } from '../../WhiteBlock';
 import { Button } from '../../Button';
 import { Avatar } from '../../Avatar';
+import { MainContext } from '../../../pages';
 export const ChooseAvatarStep: React.FC = () => {
+  const {onNextStep} = React.useContext(MainContext);
   const inputRef = React.useRef<HTMLInputElement>();
   const [avatarUrl, setAvatarUrl] = React.useState(
     'https://html5css.ru/w3css/img_avatar3.png'
@@ -35,7 +37,7 @@ export const ChooseAvatarStep: React.FC = () => {
             hidden
           />
         </div>
-        <Button>Next</Button>
+        <Button onClick={onNextStep}>Next</Button>
       </WhiteBlock>
     </div>
   );

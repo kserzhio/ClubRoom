@@ -1,0 +1,83 @@
+.flex {
+  display: flex;
+}
+.flex-wrap {
+  flex-wrap: wrap;
+}
+.flex-column {
+  flex-direction: column;
+}
+.align-items-center {
+  align-items: center;
+}
+.flex-between {
+  justify-content: space-between;
+}
+.flex-start {
+  justify-content: flex-start;
+}
+.container {
+  max-width: 1280px;
+  margin: auto;
+}
+.form-control__input {
+  max-width: 350px;
+  width: 100%;
+  border-radius: 0.25rem;
+  border: 1px solid #ced4da;
+  padding-left: 10px;
+  outline: none;
+  transition: all 0.5s ease-out;
+  height: 40px;
+  &:focus {
+    border-color: #86b7fe;
+  }
+  &.md {
+    max-width: 45%;
+  }
+}
+.mr-10 {
+  margin: 10px;
+}
+.mr-t-10 {
+  margin-top: 10px;
+}
+.mr-t-20 {
+  margin-top: 20px;
+}
+.mr-t-100 {
+  margin-top: 100px;
+}
+.mr-l-10 {
+  margin-left: 10px;
+}
+.mr-l-20 {
+  margin-left: 20;
+}
+.mr-r-10 {
+  margin-right: 10px;
+}
+.mr-r-20 {
+  margin-right: 20;
+}
+.pd-r-10 {
+  padding-right: 10px;
+}
+
+//font
+.bold {
+  font-weight: 800;
+}
+.regular {
+  font-weight: 600;
+}
+.avatarCircle {
+  border-radius: 50%;
+}
+.lastAvatar {
+  border-radius: 50%;
+  top: -20px;
+  left: 20px;
+  position: relative;
+}
+

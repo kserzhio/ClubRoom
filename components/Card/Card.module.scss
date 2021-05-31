@@ -1,0 +1,25 @@
+.card {
+  background-color: white;
+  border-radius: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  cursor: pointer;
+  max-width: 300px;
+  margin: 10px;
+  .avatar {
+    border-radius: 20px;
+  }
+  .title {
+    width: 100%;
+    padding-left: 20px;
+  }
+  .avatarContainer {
+    padding-left: 20px;
+  }
+  .nameContainer {
+    width: 60%;
+  }
+  .itemName {
+    list-style: none;
+  }
+}
