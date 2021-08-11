@@ -1,0 +1,12 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+      "outDir": "bin/",
+      "sourceMap": true,
+      "module": "commonjs",
+    },
+    "include": [
+        "server/**/*.ts",
+        "typing/**/*.ts"
+    ]
+  }
