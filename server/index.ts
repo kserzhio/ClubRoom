@@ -34,11 +34,48 @@ const randomCode = (max: number = 9999, min: number = 1000) =>
   Math.floor(Math.random() * (max - min + 1)) + min;
 app.get('/auth/github', passport.authenticate('github'));
 
-app.post(
-  '/auth/phone',
+app.get(
+  '/auth/me',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    res.json(req.user);
+  }
+);
+app.get(
+  '/auth/sms/activate',
   passport.authenticate('jwt', { session: false }),
   async (req, res) => {
-    const phone = req.body.phone;
+    const user_id = req.user.id;
+    const smsCode = req.query.code;
+    if (!smsCode) {
+      res.status(400).send();
+    }
+    const whereQuery = { code: smsCode, user_id: user_id };
+    try {
+      const findCode = await Code.findOne({
+        where: whereQuery,
+      });
+      if (findCode) {
+        Code.destroy({
+          where: whereQuery,
+        });
+        // TODO: Активировать пользователя
+        return res.send();
+      } else {
+        throw new Error('User not found');
+      }
+    } catch (err) {
+      res.status(500).json({
+        message: 'Ошибка при активации аккаунта',
+      });
+    }
+  }
+);
+app.get(
+  '/auth/sms',
+  passport.authenticate('jwt', { session: false }),
+  async (req, res) => {
+    const phone = req.query.phone;
     const user_id = req.user.id;
     const smsCode = randomCode();
     if (!phone) {
@@ -52,6 +89,7 @@ app.post(
         code: smsCode,
         user_id: user_id,
       });
+      res.status(201).send();
     } catch (err) {
       res.status(500).json(err);
     }
