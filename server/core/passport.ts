@@ -1,7 +1,20 @@
 import passport, { use } from 'passport';
 import { Strategy as GithubStrategy } from 'passport-github';
+import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 import { User } from '../../models';
-console.log(User, 111);
+import { UserData } from '../../pages';
+import { createJwtToken } from '../utils/createJwtToken';
+const opts = {
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  secretOrKey: process.env.JWT_SERCET_KEY,
+};
+passport.use(
+  'jwt',
+  new JwtStrategy(opts, (jwt_payload, done) => {
+    done(null, jwt_payload);
+  })
+);
+
 passport.use(
   'github',
   new GithubStrategy(
@@ -11,37 +24,43 @@ passport.use(
       callbackURL: 'http://localhost:3001/auth/github/callback',
     },
     async (accessToken, refreshToken, profile, done) => {
-       try {
-        const obj = {
+      try {
+        let userData: UserData;
+        const obj: Omit<UserData, 'id'> = {
           fullname: profile.displayName,
           avatarUrl: profile.photos?.[0].value,
           isActive: 0,
           username: profile.username,
           phone: '',
         };
+
         const findUser = await User.findOne({
           where: {
-            username:obj.username
-          }
+            username: obj.username,
+          },
         });
-        if(!findUser) {
+        if (!findUser) {
           const user = await User.create(obj);
-          console.log(user);
-          return done(null, user.toJSON());
+          userData = user.toJSON();
+        } else {
+          userData = await findUser.toJSON();
         }
-        done(null,findUser);
-       } catch(error) {
+        done(null, {
+          ...userData,
+          token: createJwtToken(userData),
+        });
+      } catch (error) {
         done(error);
-       }
+      }
     }
   )
 );
-passport.serializeUser(function(user,done) {
-  done(null,user.id)
-})
-passport.deserializeUser(function(id,done) {
-  User.findById(id, function(err,user) {
-    err ? done(err) : done(null, user)
-  })
-})
+passport.serializeUser(function (user, done) {
+  done(null, user.id);
+});
+passport.deserializeUser(function (id, done) {
+  User.findById(id, function (err, user) {
+    err ? done(err) : done(null, user);
+  });
+});
 export { passport };

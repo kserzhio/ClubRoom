@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { WhiteBlock } from '../../WhiteBlock';
 import { Button } from '../../Button';
 import { StepInfo } from '../../StepInfo';
-import Axios from '../../../core/axios';
+import { Axios } from '../../../core/axios';
 export const EnterCodeStep = () => {
   const router = useRouter();
   const [codes, setCodes] = React.useState(['', '', '', '']);
